@@ -1,0 +1,56 @@
+@layout('layouts/app')
+
+@section('content')
+  <div class="columns">
+    <div class="column is-three-fifths is-offset-one-fifth">
+      @if(auth.user.role == 'admin')
+      <div class="box">
+        <form action="/axie" method="post">
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input type="text" name="name" class="input" placeholder="Axie Name">
+              <input type="text" name="picture" class="input" placeholder="Axie Picture">
+            </div>
+            <div class="control is-expanded">
+              <input type="text" name="attack" class="input" placeholder="Axie Attack">
+              <input type="text" name="defense" class="input" placeholder="Axie Defense">
+            </div>
+
+          </div>
+          <div class="control">
+            <button type="submit" class="button is-link">Create Axie</button>
+          </div>
+          @if(flashMessages.has('errors'))
+            <p class="help is-danger">
+              {{ flashMessages.get('errors') }}
+            </p>
+          @endif
+        </form>
+      </div>
+      @endif
+
+      @if(flashMessages.has('notification'))
+        <div class="notification is-succes is-light">
+          {{ flashMessages.get('notification')}}
+        </div>
+      @endif
+
+        <div class="box">
+          <table class="table is-fullwidth">
+            <tbody>
+              @each(axie in axies)
+              <tr>
+                <img src="https://i.imgur.com/KAZLUyH.png"/>
+                {{--  {{ axie.picture }}  --}}
+                {{ axie.name }}
+                {{ axie.attack }}
+                {{ axie.defense }}
+              </tr>
+              @endeach
+            </tbody>
+          </table>
+        </div>
+
+    </div>
+  </div>
+@endsection
